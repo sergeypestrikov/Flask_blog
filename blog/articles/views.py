@@ -1,8 +1,6 @@
 from flask import Blueprint, render_template
 from werkzeug.exceptions import NotFound
 
-from blog.user.views import get_user_name
-
 # Объект блюпринта (эксиз) пользователя
 article = Blueprint('article', __name__, url_prefix='/articles', static_folder='../static')
 
@@ -39,7 +37,6 @@ def get_article(pk: int):
         raise NotFound(f'Статья с id {pk} не найдена')
     title = article_id['title']
     body = article_id['body']
-    author = get_user_name(article_id['author'])
     return render_template(
         'articles/details.html',
         title=title,
