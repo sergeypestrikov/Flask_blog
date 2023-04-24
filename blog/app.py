@@ -1,5 +1,7 @@
 from flask import Flask, redirect, url_for
 
+import os
+
 # Фабрика по созданию приложений
 from blog.auth.views import auth
 from blog.user.views import user
@@ -14,9 +16,9 @@ login_manager = LoginManager()
 # Точка входа в приложение. Создание экземпляра приложения
 def create_app() -> Flask:
     app = Flask(__name__)
-    app.config.from_pyfile('config.cfg')
+    app.config.from_pyfile('config.py')
     app.config['SECRET_KEY'] = '^ihiq&vwj2o)4$+qc=gkl5q4&0jnus)(=o&@2h-$)*kr6k6aj&'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/blog.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     db.init_app(app)
