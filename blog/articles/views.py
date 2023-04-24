@@ -37,6 +37,7 @@ def get_article(pk: int):
         raise NotFound(f'Статья с id {pk} не найдена')
     title = article_id['title']
     body = article_id['body']
+    author = article_id['author']
     return render_template(
         'articles/details.html',
         title=title,

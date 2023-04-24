@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean
 from blog.models.database import db
 from sqlalchemy.orm import relationship
+from blog.models.user import User
 
 
 class Article(db.Model):
@@ -8,4 +9,4 @@ class Article(db.Model):
 
     title = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String)
-    bloger = relationship('User')
+    author = relationship('User')

@@ -1,17 +1,7 @@
 from werkzeug.security import generate_password_hash
 
-from blog.app import create_app
+from blog import app
 from blog.models.database import db
-
-app = create_app()
-
-if __name__ == '__main__':
-    app = create_app()
-    app.run(
-        host='0.0.0.0',
-        port=5050,
-        debug=True
-    )
 
 
 # Команда init_db нужная для инициализации базы при первом запуске
