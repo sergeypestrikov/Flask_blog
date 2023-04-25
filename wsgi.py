@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash
 
+from blog.extensions import db
 from blog.app import create_app
-from blog.models.database import db
 
 app = create_app()
 

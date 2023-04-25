@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash
 
 from blog import app
-from blog.models.database import db
+from blog.extensions import db
 
 
 # Команда init_db нужная для инициализации базы при первом запуске
