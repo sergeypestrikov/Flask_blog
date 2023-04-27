@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean
-from blog.models.database import db
+from blog.extensions import db
 from sqlalchemy.orm import relationship
 from blog.models.user import User
 
