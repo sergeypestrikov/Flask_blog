@@ -1,8 +1,9 @@
 from flask import Flask
 
 # Фабрика по созданию приложений
-# from blog import commands
-from blog.extensions import db, login_manager
+from blog import commands
+from blog.extensions import db, login_manager, migrate
+from blog.models import User
 
 
 # Точка входа в приложение. Создание экземпляра приложения
@@ -12,18 +13,17 @@ def create_app() -> Flask:
 
     register_extensions(app)
     register_blueprints(app)
-    # register_commands(app)
+    register_commands(app)
     # Который возвращает экземпляр приложения
     return app
 
 
 def register_extensions(app):
     db.init_app(app)
+    migrate.init_app(app, db, compare_type=True)
 
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
-
-    from .models import User
 
     @login_manager.user_loader
     def load_user(user_id):
@@ -47,6 +47,6 @@ def register_blueprints(app: Flask):
     app.register_blueprint(home)
 
 
-# def register_commands(app: Flask):
+def register_commands(app: Flask):
 #     app.cli.add_command(commands.init_db)
-#     app.cli.add_command(commands.create_users)
+    app.cli.add_command(commands.create_init_user)
