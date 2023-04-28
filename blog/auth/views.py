@@ -1,19 +1,23 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from werkzeug.security import check_password_hash
-from flask_login import logout_user, login_user, login_required
+from flask_login import logout_user, login_user, login_required, current_user
+from blog.models import User
 
 auth = Blueprint('auth', __name__, static_folder='../static')
 
 
-@auth.route('/login', methods=['POST', 'GET'])
+@auth.route('/login', methods=('GET',))
 def login():
-    if request.method == 'GET':
-        return render_template('auth/login.html')
+    if current_user.is_authenticated:
+        return redirect(url_for('user.profile', pk=current_user.id))
 
+    return render_template('auth/login.html')
+
+
+@auth.route('/login', methods=('POST',))
+def login_post():
     email = request.form.get('email')
     password = request.form.get('password')
-
-    from blog.models.user import User
 
     user = User.query.filter_by(email=email).first()
 
