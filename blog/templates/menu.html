@@ -10,14 +10,20 @@
           <a class="nav-link active" aria-current="page" href="/">Кафе Конфэ</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('user.user_list') }}">Блогеры</a>
+          <a class="nav-link" href="{{ url_for('user.user_list') }}">Пользователи</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('author.author_list') }}">Авторы</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('article.article_list') }}">Статьи</a>
         </li>
         {% if current_user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link active" href="{{ url_for('auth.logout') }}">Logout ({{ current_user.email }})</a>
+              <a class="nav-link" href="{{ url_for('article.create_article_form') }}">Создать статью</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{{ url_for('auth.logout') }}">Logout ({{ current_user.name }})</a>
             </li>
         {% else %}
             <li class="nav-item">

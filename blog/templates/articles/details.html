@@ -1,11 +1,22 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Статья
+    {{ article.title }}
 {% endblock %}
 
 {% block body %}
-    <h3>{{ title }}</h3>
-    <br> {{ body }} <br>
-    <br> {{ author }} <br>
+    <div class="row">
+        <h1>{{ article.title }}</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-12">{{ article.text }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div><small class="text-muted">Автор: {{ article.author.user.name }} {{ article.author.user.surname }}</small></div>
+            <div><small class="text-muted">Добавлено: {{ article.created_at.strftime('%d-%m-%Y %H:%M:%S') }}</small></div>
+            <div><small class="text-muted">Обновлено: {{ article.updated_at.strftime('%d-%m-%Y %H:%M:%S') }}</small></div>
+        </div>
+    </div>
 {% endblock %}
