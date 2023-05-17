@@ -23,3 +23,17 @@ def create_init_user():
     )
     db.session.commit()
     print('Прекрасно! Создан пользователь')
+
+
+# Команда, которая поможет создавать теги
+@click.command('create-init-tags')
+def create_init_tags():
+    from blog.models import Tag
+    from wsgi import app
+
+    with app.app_context():
+        tags = ('кофе', 'любовь', 'отношения', 'бина')
+        for item in tags:
+            db.session.add(Tag(name=item))
+        db.session.commit()
+    click.echo(f'Созданы теги: {", ".join(tags)}')
