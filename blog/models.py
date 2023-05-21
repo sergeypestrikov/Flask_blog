@@ -1,10 +1,20 @@
 from datetime import datetime
 
+
 from flask_login import UserMixin
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, Table
 from sqlalchemy.orm import relationship
 
 from blog.extensions import db
+
+
+# Таблица тагов/статей
+article_tag_association_table = Table(
+    'article_tag_association',
+    db.metadata,
+    db.Column('article_id', db.Integer, ForeignKey('articles.id'), nullable=False),
+    db.Column('tag_id', db.Integer, ForeignKey('tags.id'), nullable=False),
+)
 
 
 # Модель пользователя
@@ -49,3 +59,14 @@ class Article(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     author = relationship('Author', back_populates='articles')
+    tags = relationship('Tag', secondary=article_tag_association_table, back_populates='articles')
+
+
+# Модель тега
+class Tag(db.Model):
+    __tablename__ = 'tags'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), nullable=False)
+
+    articles = relationship('Article', secondary=article_tag_association_table, back_populates='tags')

@@ -18,5 +18,10 @@
             <div><small class="text-muted">Добавлено: {{ article.created_at.strftime('%d-%m-%Y %H:%M:%S') }}</small></div>
             <div><small class="text-muted">Обновлено: {{ article.updated_at.strftime('%d-%m-%Y %H:%M:%S') }}</small></div>
         </div>
+        <div class="col-6">
+            {% for tag in article.tags %}
+            <span class="badge text-bg-secondary">{{ tag.name }}</span>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
