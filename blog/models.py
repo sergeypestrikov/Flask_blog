@@ -4,6 +4,7 @@ from datetime import datetime
 from flask_login import UserMixin
 from sqlalchemy import ForeignKey, Table
 from sqlalchemy.orm import relationship
+from werkzeug.security import check_password_hash
 
 from blog.extensions import db
 
@@ -26,14 +27,21 @@ class User(db.Model, UserMixin):
     surname = db.Column(db.String(40))
     email = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(255))
+    is_staff = db.Column(db.Boolean, default=False)
 
     author = relationship('Author', uselist=False, back_populates='user')
+
+    def check_password(self, password: str) -> bool:
+        return check_password_hash(self.password, password)
 
     def __init__(self, name, surname, email, password):
         self.name = name
         self.surname = surname
         self.email = email
         self.password = password
+
+    def __str__(self):
+        return f'{self.user.email} ({self.user.id})'
 
 
 # Модель автора
@@ -45,6 +53,9 @@ class Author(db.Model):
 
     user = relationship('User', back_populates='author')
     articles = relationship('Article', back_populates='author')
+
+    def __str__(self):
+        return self.user.email
 
 
 # Модель статьи
@@ -61,6 +72,8 @@ class Article(db.Model):
     author = relationship('Author', back_populates='articles')
     tags = relationship('Tag', secondary=article_tag_association_table, back_populates='articles')
 
+    def __str__(self):
+        return self.title
 
 # Модель тега
 class Tag(db.Model):
@@ -70,3 +83,6 @@ class Tag(db.Model):
     name = db.Column(db.String(64), nullable=False)
 
     articles = relationship('Article', secondary=article_tag_association_table, back_populates='tags')
+
+    def __str__(self):
+        return self.name
