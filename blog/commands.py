@@ -5,11 +5,10 @@ from blog.extensions import db
 
 
 # Команда init_db нужная для инициализации базы при первом запуске
-# @app.cli.command('init-db')
-# def init_db():
-#
-#     db.create_all()
-#     print('База Данных инициализирована!')
+@click.command('init-db')
+def init_db():
+    db.create_all()
+    print('База Данных инициализирована!')
 
 
 # Команда create_init_user, которая поможет создавать пользователей
@@ -19,7 +18,7 @@ def create_init_user():
     from wsgi import app
 
     db.session.add(
-        User(email='name@email.com', password=generate_password_hash('test123'))
+        User(name='Sergey', surname='Pestrikov', email='name@email.com', password=generate_password_hash('test123'))
     )
     db.session.commit()
     print('Прекрасно! Создан пользователь')
