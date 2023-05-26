@@ -16,12 +16,12 @@ def init_db():
 def create_init_user():
     from blog.models import User
     from wsgi import app
-
-    db.session.add(
-        User(name='Sergey', surname='Pestrikov', email='name@email.com', password=generate_password_hash('test123'))
-    )
-    db.session.commit()
-    print('Прекрасно! Создан пользователь')
+    with app.app_context():
+        db.session.add(
+             User(name='Sergey', surname='Pestrikov', email='mail@mail.ru', password=generate_password_hash('220883'))
+            )
+        db.session.commit()
+        print('Прекрасно! Создан пользователь')
 
 
 # Команда, которая поможет создавать теги
