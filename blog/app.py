@@ -1,5 +1,7 @@
 from flask import Flask
 from combojsonapi.spec import ApiSpecPlugin
+from combojsonapi.event import EventPlugin
+from combojsonapi.permission import PermissionPlugin
 
 # Фабрика по созданию приложений
 from blog import commands
@@ -26,6 +28,8 @@ def register_extensions(app):
     csrf.init_app(app)
     admin.init_app(app)
     api.plugins = [
+        EventPlugin(),
+        PermissionPlugin(),
         ApiSpecPlugin(
             app=app,
             tags={
@@ -36,6 +40,7 @@ def register_extensions(app):
             }
         ),
     ]
+    api.init_app(app)
 
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
