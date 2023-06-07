@@ -8,7 +8,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h3>Авторы:</h3>
+            <h4>Авторы</h4>
             {% for author in authors %}
             <ul>
                 <li><a href="{{ url_for('user.profile', pk=author.user.id) }}"> {{ author.user.name }} {{ author.user.surname }}</a></li>

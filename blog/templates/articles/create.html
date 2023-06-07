@@ -7,7 +7,7 @@
 
 {% block body %}
     <div class="row">
-        <h1>Создание статьи:</h1>
+        <h4>Создание статьи</h4>
     </div>
     <form method="POST" action="{{ url_for('article.create_article') }}">
         {{ form.csrf_token }}
